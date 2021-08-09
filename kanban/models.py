@@ -16,8 +16,9 @@ class Course(models.Model):
     progress = models.IntegerField(default=0)
     def serialize(self):
         _students = []
+        print(self.student)
         if(self.student != None):
-            _students = [st.student for st in self.student.all()]
+            _students = [st for st in self.student]
 
         return {
             "id": self.id,

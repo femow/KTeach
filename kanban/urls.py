@@ -12,5 +12,6 @@ urlpatterns = [
     path("register", views.register, name="register"),
 
     path("api/courses", views.get_courses, name="getcourses"),
-    path("api/allcourses", views.get_all_courses, name="allcourses")
+    path("api/allcourses", views.get_all_courses, name="allcourses"),
+    path("api/joincourse", views.join_course, name="joincourse")
 ]

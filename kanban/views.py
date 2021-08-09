@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, get_user, login, logout
+from django.views.decorators.csrf import csrf_exempt
 from django.db.utils import IntegrityError
 from django.http.response import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
@@ -133,3 +134,21 @@ def get_all_courses(request):
         return JsonResponse({ "courses": _courses }, safe=False, status = 200)
     
     return JsonResponse({"error": "Something went wrong."}, status = 500)
+
+@csrf_exempt
+def join_course(request):
+    if request.method == "POST":
+        accesskey = request.POST["accesskey"]
+        courseid = request.POST['courseid']
+        user = request.user
+        print(courseid)
+        course = Course.objects.get(pk=courseid)
+        print(course)
+        if accesskey == course.key:
+            user.courses.add(course)
+            print(course)
+            return HttpResponseRedirect(reverse('courses:' + course.title))
+
+    return render(request, "kanban/findcourse.html", {
+        "message": "*Invalid key"
+    })

@@ -14,14 +14,20 @@ document.addEventListener("DOMContentLoaded", e => {
             findcourses.append(generateCourseCard(el))
         })
     })
+
+
+    modal.querySelector("button").addEventListener("click", (e) => {
+        modal.className = "none"
+        e.preventDefault()
+    })
 })
 
 function clickCard(e, course) {
-    console.log(course);
     if(course.students.filter(c => c.username == user_id).length > 0 || course.teacher.username == user_id) {
-        
     }
     else {
+        modal.querySelector("h2").innerHTML = "Join " + course.title
+        modal.querySelector("input[name='courseid']").value = course.id
         modal.className = "modal"
         e.preventDefault();
     }
