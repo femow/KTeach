@@ -222,11 +222,14 @@ li {
 }
 
 .msg-error {
-    color: red;
     font-weight: bold;
     font-size: 0.6em;
     margin-top: 4px;
     width: 100%;
+}
+
+.msg-error p {
+    color: red;
 }
 
 

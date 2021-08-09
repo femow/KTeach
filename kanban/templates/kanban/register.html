@@ -8,21 +8,23 @@
 {% block body %}
 <div class="login">
     <div>
-        <form action="{% url 'login' %}" method="post">
+        <form action="{% url 'register' %}" method="post">
             {% csrf_token %}
-            <h2>Sign in</h2>
+            <h2>Register</h2>
             <input type="text" name="username" placeholder="Enter your username" autofocus>
+            <input type="text" name="email" placeholder="Enter you email">
             <input type="password" name="password" placeholder="Enter you password">
+            <input type="password" name="confirmation" placeholder="Cofnrim your password">
             <br>
-            <input type="submit" value="Sign in">
+            <input type="submit" value="Confirm">
             {% if message %}
                 <div class="msg-error"><p>{{ message }}</p></div>
             {% endif %}
 
-            <p>Don't have an account? <a href="{% url 'register' %}">Register here.</a></p>
+            <p>Already have an account? <a href="{% url 'login' %}">Click here.</a></p>
         </form>
         <div id="login-img">
-            <img src="../../static/kanban/Mobile-login.jpg" alt="" width="400px" style="border-radius: 0 4px 4px 0;">
+            <img src="../../static/kanban/Creativity-amico.png" alt="" width="400px">
         </div>
     </div>
 </div>

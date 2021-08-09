@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, get_user, login, logout
+from django.db.utils import IntegrityError
 from django.http.response import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
@@ -73,14 +74,49 @@ def login_view(request):
             return HttpResponseRedirect(reverse("index"))
         else:
             return render(request, "kanban/login.html", {
-                "message": "Invalid username and/or password."
+                "message": "*Invalid username and/or password."
             })
     else:
         return render(request, "kanban/login.html")
 
 def register(request):
-    return render(request, "kanban/dashboard.html", {
-    })
+    if request.user.is_authenticated:
+        return render(request, "kanban/dashboard.html", {
+        })
+    if request.method == "POST":
+        username = request.POST["username"]
+        email = request.POST["email"]
+        # Ensure password matches confirmation
+        password = request.POST["password"]
+        confirmation = request.POST["confirmation"]
+        if password != confirmation:
+            return render(request, "kanban/register.html", {
+                "message": "*Passwords must match."
+            })
+        elif username == "":
+            return render(request, "kanban/register.html", {
+                "message": "*Invalid username."
+            })
+        elif password == "":
+            return render(request, "kanban/register.html", {
+                "message": "*Invalid password."
+            })
+        elif email == "":
+            return render(request, "kanban/register.html", {
+                "message": "*Invalid Email."
+            })
+        # Attempt to create new user
+        try:
+            _user = User.objects.create_user(username, email, password)
+            _user.save()
+        except IntegrityError:
+            return render(request, "kanban/register.html", {
+                "message": "*Username already taken."
+            })
+        login(request, _user)
+        return HttpResponseRedirect(reverse("index"))
+    else:
+        return render(request, "kanban/register.html")
 
 def get_courses(request):
     _user = get_user(request)
