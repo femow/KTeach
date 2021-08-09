@@ -1,0 +1,32 @@
+{% extends "kanban/layout.html" %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'kanban/css/findcourse.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="findcourse">
+    <form class="findcourse-div">
+        <h1>Searching for a course?</h1>
+        <input type="text" name="" id="" placeholder="Find course" autofocus>
+        <input type="submit" value="Search">
+    </form>
+    <hr>
+    <div id="findcourse-courses" class="course-cards"></div>
+    <div id="modal" class="none">
+        <div>
+            <h2>Join a course</h2>
+            <p>Access code:</p>
+            <input type="text">
+            <input type="submit" value="Join the Course">
+            <button>X</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'kanban/js/findcourse.js' %}"></script>
+{% endblock %}

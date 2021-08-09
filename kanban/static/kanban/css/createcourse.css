@@ -1,0 +1,22 @@
+.createcourse {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.createcourse form{
+    background-color: white;
+    border-radius: 4px;    
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    align-items: center;
+}
+
+.createcourse form h2 {
+    width: 100%;
+}
+
+.createcourse form input[type=submit] {
+    margin-top: 12px;
+}

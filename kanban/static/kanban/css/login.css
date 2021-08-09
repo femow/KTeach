@@ -1,0 +1,39 @@
+.login {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.login > div {
+    background-color: white;
+    border-radius: 4px;
+    height: 400px;
+    display: flex;
+}
+
+.login form h2 {
+    margin: 16px 0;
+}
+
+.login form{
+    width: 320px;
+    padding: 32px 12px 12px 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login form input[type=submit] {
+    width: 320px;
+    margin: 0;
+}
+
+.login p {
+    margin-top: 4px;
+}
+
+#login-img {
+    background-color: #FFA0A0;
+    width: 400px;
+    border-radius: 0 4px 4px 0;
+}

@@ -1,0 +1,20 @@
+{% extends "kanban/layout.html" %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'kanban/css/dashboard.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="dashboard">
+    <h1 style="text-align: center;">My Classes</h1>
+    <div class="course-cards" id="dashboard-my-classes">
+    </div>
+    <h1 style="text-align: center;">My Courses</h1>
+    <div class="course-cards" id="dashboard-my-courses"></div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'kanban/js/dashboard.js' %}"></script>
+{% endblock %}

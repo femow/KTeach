@@ -1,0 +1,27 @@
+{% extends "kanban/layout.html" %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'kanban/css/createcourse.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="createcourse">
+    <form action="{% url 'createcourse' %}" method="POST">
+        {% csrf_token %}
+        <h2>Title</h2>
+        <input type="text" name="title" id="" placeholder="Enter course name" autofocus>
+        <h2>Course Key</h2>
+        <input type="text" name="accesskey" id="" placeholder="Enter course key">
+        {% if message %}
+            <div class="msg-error">{{ message }}</div>
+        {% endif %}
+        <input type="submit" value="Create">
+    </form>
+</div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'kanban/js/findcourse.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,240 @@
+* {
+    margin: 0px;
+    color: #412a2a;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
+}
+
+html {
+    background: #ddd;
+    background-image: linear-gradient(45deg, 
+        #fdf1f1,
+        #f3d7d7,
+        #f5cece,
+        #f3d7d7,
+        #f8dede
+    );
+}
+
+body {
+    display: flex;
+}
+
+button, input[type=submit] {
+    width: 240px;
+    height: 40px;
+    border-radius: 4px;
+    background: white;
+    font-size: 0.7rem;
+    color: #FFA0A0;
+    border: 2px solid #FFA0A0;
+    font-weight: bolder;
+    margin: 4px 0 4px 0;
+    transition: 0.125s;
+    cursor: pointer;
+}
+
+input[type=submit] {
+    background: #FFA0A0;
+    color: white;
+}
+
+input[type=submit]:hover, button:hover {
+    background: #FFA0A0;
+    color: white;
+    font-size: 0.85em;
+}
+
+input[type=text], input[type=password] {
+    padding: 8px;
+    transition: 0.25s;
+    outline: #FFA0A0;
+    border: 1px solid #FFA0A0;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    min-width: 300px;
+
+}
+
+input[type=text]:focus, input[type=password]:focus {
+    padding: 12px 8px;
+}
+
+ol {
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+li {
+    margin-bottom: 16px;
+}
+
+.content {
+    width: 100%;
+}
+
+
+.proj-title, .sidebar-logo {
+    background: #412a2a9d;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bolder;
+}
+
+.sidebar-logo {
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+}
+
+
+.proj-title-s1 {
+    font-size: 36px;
+    color: white;
+}
+
+.proj-title-s2 {
+    font-size: 16px;
+    color: #FFA0A0;
+    padding-top: 16px;
+}
+
+.hr {
+    width: 80%;
+    height: 1px;
+    border-radius: 1px;
+    background-color:rgba(109, 109, 109, 0.3);
+    margin: 8px 0 8px 0;
+}
+
+.sidebar {
+    height: 100vh;
+    width: 340px;
+    background: white;
+    color: #412a2a;
+    display: flex;
+    padding: 8px;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.sidebar a {
+    font-size: 0.7rem;
+    color: unset;
+    text-decoration-line: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 100px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-img img {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.course-cards {
+    display: flex;
+    padding: 4px;
+    flex-wrap: wrap;
+}
+
+.course-card {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    border-radius: 4px;
+    background-color: white;
+    color: #412a2a;
+    margin: 8px;
+    cursor: pointer;
+    text-decoration-line: none;
+}
+
+.course-card:hover {
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+.course-card h2 {
+    background-color: #FFA0A0;
+    border-radius: 4px 4px 0 0;
+    text-align: center;
+}
+
+.course-card > div {
+    padding: 8px 8px 4px 4px;
+}
+
+.course-card-progress {
+    width: 100%;
+    height: 20px;
+    border: 1px solid #c97e7e88;
+    border-radius: 4px;
+    position: relative;
+}
+
+.course-card-progress > div {
+    position: absolute;
+    height: 100%;
+    justify-content: flex-start;
+    background: none;
+}
+
+.course-card-progress > div > div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+    background-color: #FFA0A0;
+    animation-timing-function: linear;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.none {
+    display: none;
+}
+
+.msg-error {
+    color: red;
+    font-weight: bold;
+    font-size: 0.6em;
+    margin-top: 4px;
+    width: 100%;
+}
+
+
+@keyframes animProgressBar {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 100%;
+    }
+}

@@ -1,0 +1,48 @@
+.findcourse hr {
+    margin: 16px 8px;
+}
+
+.findcourse-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 20px;
+    flex-direction: column;
+}
+.findcourse-div input[type=submit] {
+    margin: 8px;
+}
+
+.findcourse-div > h1 {
+    margin-bottom: 4px;
+}
+
+
+.modal > div {
+    padding: 12px;
+    background-color: white;
+    border-radius: 4px;
+    position: relative;
+}
+
+.modal button {
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: -25px;
+    right: 0px;
+    font-size: 1.25rem;
+    transition: 0s;
+}
+
+.modal button:hover {
+    background-color: white;
+    color: #FFA0A0;
+    border: 3px solid #FFA0A0;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+}

@@ -1,0 +1,90 @@
+{% extends "kanban/layout.html" %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'kanban/css/index.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="index-main">
+    <h1 style="text-align: center;">MATH CLASS</h1>
+    <div class="tab-div">
+        <div class="cards" id="cards-backlog">
+            <div class="card-header">
+                <h3>BACKLOG</h3>
+            </div>
+        </div>
+        <div class="cards" id="cards-todo">
+            <div class="card-header">
+                <h3>TO DO</h3>
+            </div>
+        </div>
+        <div class="cards" id="cards-done">
+            <div class="card-header">
+                <h3>DONE</h3>
+            </div>
+        </div>
+    </div>
+    <div id="modal" class="none">
+        <form action="" id="form-editcard">
+            <h1>Atividade 1</h1>
+            <h4>Title</h4>
+            <input type="text" name="" id="" placeholder="Title">
+            <h4>Description</h4>
+            <input type="text" name="" id="" placeholder="Description">
+            <h4>Deadline</h4>
+            <input type="text" name="" id="" placeholder="mm/dd/yyyy">
+            <h4>Score</h4>
+            <input type="text" name="" id="" placeholder="0-10">
+            <h4>Content</h4>
+            <ol >
+                <li>
+                    <div class="none">
+                        Questao 1 referente ao talt atal?
+                        <a href="">Edit</a>
+                        <div>
+                            <input type="radio" name="question1" id="question1a">
+                            <label for="question1a">Sim, mas</label>
+                            <br>
+                            <input type="radio" name="question1" id="question1b">
+                            <label for="question1a">Nao, mas</label>
+                            <br>
+                            <input type="radio" name="question1" id="question1c">
+                            <label for="question1a">Talvez, mas</label>
+                            <br>
+                            <input type="radio" name="question1" id="question1d">
+                            <label for="question1a">Sim e Não, mas</label>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="text" name="" id="" placeholder="Question 1">
+                        <button class="button-icon"><i class="bi bi-check"></i></button>
+                        <button class="button-icon"><i class="bi bi-trash-fill"></i></button>
+                        <div >
+                            <input type="radio" name="question1" id="question1a">
+                            <input type="text" name="" id="" placeholder="Answer">
+                            <br>
+                            <input type="radio" name="question1" id="question1a">
+                            <input type="text" name="" id="" placeholder="Answer">
+                            <br>
+                            <input type="radio" name="question1" id="question1a">
+                            <input type="text" name="" id="" placeholder="Answer">
+                            <br>
+                            <input type="radio" name="question1" id="question1a">
+                            <input type="text" name="" id="" placeholder="Answer">
+                        </div>
+                    </div>
+                </li>
+            </ol>
+            <button class="card-add-button">+ add question</button>
+            <div style="display: flex; margin: 20px 0 8px 0;">
+                <input type="submit" value="Confirm">
+                <button id="form-cancel">Cancel</button>
+            </div>
+        </form>
+    </div>    
+</div>    
+{% endblock %}
+{% block script %}
+    <script src="{% static 'kanban/js/index.js' %}"></script>
+{% endblock %}
