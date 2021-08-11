@@ -10,16 +10,15 @@ class User(AbstractUser):
 
 class Course(models.Model):
     teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name="classes")
-    student = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="courses")
+    students = models.ManyToManyField(User, related_name="courses")
     title = models.CharField(max_length=20, unique=True)
     key = models.CharField(max_length=20)
     progress = models.IntegerField(default=0)
     def serialize(self):
-        _students = []
-        print(self.student)
-        if(self.student != None):
-            _students = [st for st in self.student]
 
+        _students = []
+        if self.students:
+            _students = [st.serialize() for st in self.students.all()]
         return {
             "id": self.id,
             "teacher": self.teacher.serialize(),
@@ -33,8 +32,16 @@ class Card(models.Model):
     studenttask = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tasks")
     status = models.CharField(max_length=20)
     title = models.CharField(max_length=20)
-    date = models.DateTimeField(auto_now_add=False)
     grade = models.SmallIntegerField()
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "questions": [q.serialize() for q in self.questions.all()],
+            "status": self.status,
+            "title": self.title,
+            "grade": self.grade
+        }
 
 class Question(models.Model):
     card = models.ForeignKey(Card, on_delete=models.CASCADE, related_name="questions")
@@ -45,3 +52,15 @@ class Question(models.Model):
     answer3 = models.CharField(max_length=200, null=True, blank=True)
     answer4 = models.CharField(max_length=200, null=True, blank=True)
     answer5 = models.CharField(max_length=200, null=True, blank=True)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "question": self.question,
+            "correct": self.question,
+            "answer1": self.answer1,
+            "answer2": self.answer2,
+            "answer3": self.answer3,
+            "answer4": self.answer4,
+            "answer5": self.answer5
+        }

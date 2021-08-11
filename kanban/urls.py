@@ -11,7 +11,9 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
 
+    path("api/getcourse/<str:course>", views.get_course_content, name="getcourse"),
     path("api/courses", views.get_courses, name="getcourses"),
     path("api/allcourses", views.get_all_courses, name="allcourses"),
-    path("api/joincourse", views.join_course, name="joincourse")
+    path("api/joincourse", views.join_course, name="joincourse"),
+    path("api/updatecard", views.update_card, name="updatecard")
 ]
