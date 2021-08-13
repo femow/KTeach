@@ -111,6 +111,7 @@
     box-shadow:         inset 0 0 10px #0000005e;
 }
 
+
 .modal h1 {
     color: #FFA0A0;
     text-align: center;
@@ -125,6 +126,15 @@
     max-height: 80%;
     overflow: scroll;
     overflow-x: hidden;
+    min-width: 420px;
+}
+
+.modal form ol {
+    padding-left: 16px;
+}
+
+.modal form input[type=radio] {
+    margin-right: 4px;
 }
 
 
@@ -149,4 +159,34 @@
 .button-icon:hover {
     background: #FFA0A0;
     color: white;
+}
+
+#card-description, #card-title {
+    width: 330px;
+}
+
+.card-title-done {
+    background: #ac7171;
+}
+
+.radio-disabled-true:after,
+.radio-disabled-false:after {
+    width: 13px;
+    height: 13px;
+    border-radius: 15px;
+    top: -2px;
+    left: -2px;
+    position: relative;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+.radio-disabled-true[disabled]:after {
+    background-color: rgb(8, 219, 8);
+}
+
+.radio-disabled-false[disabled]:after {
+    background-color: rgb(240, 63, 10);
 }

@@ -57,7 +57,7 @@ class Question(models.Model):
         return {
             "id": self.id,
             "question": self.question,
-            "correct": self.question,
+            "correct": self.correct,
             "answer1": self.answer1,
             "answer2": self.answer2,
             "answer3": self.answer3,

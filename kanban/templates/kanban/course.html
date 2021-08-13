@@ -26,19 +26,21 @@
         </div>
     </div>
     <div id="modal" class="none">
-        <form action="" id="form-editcard">
-            <div id="form-editcard-teacher">
-                <h1>Card</h1>
+        <form id="form-editcard" method="POST">
+        <div id="form-editcard-teacher">
+                <div style="display: flex; justify-content: center;">
+                    <h1>Card</h1>
+                    <button type="button" id="form-delete" class="button-icon">
+                        <i class='bi bi-trash-fill'></i>
+                    </button>
+                </div>
                 <h4>Title</h4>
                 <input type="text" name="card-title" id="card-title" placeholder="Title">
-                <h4>Description</h4>
-                <input type="text" name="card-description" id="card-description" placeholder="Description">
             </div>
             <div class="none" id="form-editcard-student">
-                <h1>New Card</h1>
-                <span><strong>Description: </strong>Descricao da atividade</span>
+                <h1>Card</h1>
                 <br>
-                <span><strong>Score: </strong>0/0</span>
+                <span><strong>Grade: </strong>0/0</span>
             </div>
             <h1>Questions</h1>
             <ol >
@@ -62,8 +64,8 @@
                     </div>
                 </li>
             </ol>
-            <button type="button" class="card-add-button" id="card-add-question">+ add question</button>
-            <div style="display: flex; margin: 20px 0 8px 0;">
+            <button type="button" class="none" id="card-add-question">+ add question</button>
+            <div style="display: flex; align-items: center; flex-direction: column; margin: 20px 0 8px 0;">
                 <input type="submit" value="Confirm">
                 <button type="button" id="form-cancel">Cancel</button>
             </div>

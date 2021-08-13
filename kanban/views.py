@@ -1,5 +1,6 @@
 import json
 from django.contrib.auth import authenticate, get_user, login, logout
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.db.utils import IntegrityError
 from django.http.response import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -137,8 +138,14 @@ def get_course_content(request, course):
     _user = get_user(request)
     if request.method == "GET" and _user.is_authenticated:
         _course = Course.objects.get(title = course)
-        _cards = [q.serialize() for q in _course.cards.all()]
-        return JsonResponse({ "amiteacher": _user.username == _course.teacher.username, "course": _course.serialize(), "cards": _cards }, safe=False, status = 200)
+        _cardsTeacher = [q.serialize() for q in _course.cards.filter(studenttask = _course.teacher)]
+        _cardsStudent = [q.serialize() for q in _course.cards.filter(studenttask = _user)]
+        return JsonResponse({
+            "amiteacher": _user.username == _course.teacher.username,
+            "course": _course.serialize(),
+            "cardsTeacher": _cardsTeacher,
+            "cardsStudent": _cardsStudent,
+            }, safe=False, status = 200)
     return JsonResponse({"error": "Something went wrong."}, status = 500)
 
 @csrf_exempt
@@ -156,50 +163,119 @@ def join_course(request):
         "message": "*Invalid key"
     })
 
+@csrf_exempt
+def delete_card(request):
+    if request.method == "POST":
+        data = request.body
+        data = json.loads(data)
+        try:
+            print(data['cardid'])
+            card = Card.objects.get(id = data['cardid'])
+            print(card)
+            card.delete()
+            return JsonResponse({"Status": "Ok"}, status = 200)
+        except:
+            return JsonResponse({"error": "Something went wrong."}, status = 500)
+    return JsonResponse({"error": "Something went wrong."}, status = 500)
+
+@csrf_exempt
 def update_card(request):
     if request.method == "POST":
+        data = request.body
+        data = json.loads(data)
+        dataCourse = data['card']
+        _card = Card.objects.get(id = dataCourse['id'])
+        if request.user == None:
+            return JsonResponse({"error": "No User."}, status = 500)
+        elif dataCourse['title'] == None or dataCourse['title'] == "":
+            return JsonResponse({"error": "No Title."}, status = 500)
+        elif dataCourse['questions'] == None or len(dataCourse['questions']) == 0:
+            return JsonResponse({"error": "No Question."}, status = 500)
+        for q in dataCourse['questions']:
+            if q['question'] == None:
+                return JsonResponse({"error": "No Question."}, status = 500)
+            elif q['answer1'] == None or q['answer1'] == "":
+                return JsonResponse({"error": "No Answer 1."}, status = 500)
+            elif q['answer2'] == None or q['answer2'] == "":
+                return JsonResponse({"error": "No Answer 2."}, status = 500)
+            elif q['correct'] == None:
+                return JsonResponse({"error": "No Correct."}, status = 500)
+
+        _card.title = dataCourse['title']
+        _card.status = dataCourse['status']
+        _card.save()
+        for q in dataCourse['questions']:
+            _q = None
+            if 'id' in q.keys():
+                _q = Question.objects.get(id = q['id'])
+                _q.question = q['question']
+                _q.correct = q['correct']
+                _q.answer1 = q['answer1']
+                _q.answer2 = q['answer2']
+                _q.answer3 = q['answer3']
+                _q.answer4 = q['answer4']
+                _q.answer5 = q['answer5']
+            else:
+                _q = Question(
+                    card = _card,
+                    question = q['question'],
+                    correct = q['correct'],
+                    answer1 = q['answer1'],
+                    answer2 = q['answer2'],
+                    answer3 = q['answer3'],
+                    answer4 = q['answer4'],
+                    answer5 = q['answer5']
+                )
+            _q.save()
+        for cq in _card.questions.all():
+            try:
+                if cq.id not in [_cq['id'] for _cq in dataCourse['questions']]:
+                    cq.delete()
+            except:
+                pass
         
-        return JsonResponse({ }, safe=False, status = 200)
+        return JsonResponse({"card": _card.serialize()}, status = 200)
 
     return JsonResponse({"error": "Something went wrong."}, status = 500)
 
 def create_card(request):
     if request.method == "POST":
-        data = request.POST.get('data')
+        data = request.body
         data = json.loads(data)
-        _course = Course.objects.get(id=data.courseid)
+        dataCourse = data['card']
+        _course = Course.objects.get(title = data['courseTitle'])
+        if _course == None:
+            return JsonResponse({"error": "No Course."}, status = 500)
+        elif request.user == None:
+            return JsonResponse({"error": "No User."}, status = 500)
+        elif dataCourse['title'] == None or dataCourse['title'] == "":
+            return JsonResponse({"error": "No Title."}, status = 500)
+        elif dataCourse['questions'] == None or len(dataCourse['questions']) == 0:
+            return JsonResponse({"error": "No Question."}, status = 500)
+        for q in dataCourse['questions']:
+            if q['correct'] == None:
+                return JsonResponse({"error": "No Question."}, status = 500)
+
         _card = Card(
             course =_course,
-            user = request.user,
-            status = data.status,
-            title = data.title,
+            studenttask = request.user,
+            status = dataCourse['status'],
+            title = dataCourse['title'],
             grade = 0
         )
         _card.save()
-        for q in data.questions:
+        for q in dataCourse['questions']:
             _q = Question(
                 card = _card,
-                question = q.question,
-                correct = q.correct,
-                answer1 = q.answer1,
-                answer2 = q.answer2,
-                answer3 = q.answer3,
-                answer4 = q.answer4,
-                answer5 = q.answer5
+                question = q['question'],
+                correct = q['correct'],
+                answer1 = q['answer1'],
+                answer2 = q['answer2'],
+                answer3 = q['answer3'],
+                answer4 = q['answer4'],
+                answer5 = q['answer5']
             )
             _q.save()
+        return JsonResponse({"card": _card.serialize()}, status = 200)
 
-
-        # loop questions
-            # loop anwers
-            # register question
-        # create card(course, studdenttask, status, title, date, grade)
-
-def add_question(request, cardid):
-    if request.method == "POST":
-        data = request.POST.get('data')
-        data = json.loads(data)
-
-        # get Card.objects(key=cardid)
-        # create question(card, question, correct, answer1, answer5)
-        # question.save()
+    return JsonResponse({"error": "Something went wrong."}, status = 500)
