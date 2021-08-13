@@ -103,7 +103,7 @@
     top: 4px;
     display: flex;
     width: 240px;
-    height: 83px;
+    height: 58px;
     border-radius: 4px;
     background-color: #d3d4d4;
     -moz-box-shadow:    inset 0 0 10px #0000005e;
@@ -115,6 +115,9 @@
 .modal h1 {
     color: #FFA0A0;
     text-align: center;
+}
+.modal h2 {
+    color: #FFA0A0;
 }
 
 .modal form {

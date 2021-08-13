@@ -27,7 +27,7 @@
     </div>
     <div id="modal" class="none">
         <form id="form-editcard" method="POST">
-        <div id="form-editcard-teacher">
+            <div id="form-editcard-teacher">
                 <div style="display: flex; justify-content: center;">
                     <h1>Card</h1>
                     <button type="button" id="form-delete" class="button-icon">
@@ -70,8 +70,28 @@
                 <button type="button" id="form-cancel">Cancel</button>
             </div>
         </form>
-    </div>    
-</div>    
+    </div>
+    <div id="student-teacher-cards">
+        <h1 style="text-align: center;">Students</h1>
+        <div class="tab-div">
+            <div class="cards">
+                <div class="card-header">
+                    <h3>A-H</h3>
+                </div>
+            </div>
+            <div class="cards">
+                <div class="card-header">
+                    <h3>I-Q</h3>
+                </div>
+            </div>
+            <div class="cards">
+                <div class="card-header">
+                    <h3>R-Z</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 {% block script %}
     <script src="{% static 'kanban/js/course.js' %}"></script>

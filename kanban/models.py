@@ -6,6 +6,8 @@ class User(AbstractUser):
 
         return {
             "username": self.username,
+            "firstname": self.first_name,
+            "lastname": self.last_name
         }
 
 class Course(models.Model):

@@ -28,10 +28,10 @@ document.addEventListener("DOMContentLoaded", e => {
         cards = data.cardsTeacher;
         cardsStudent = data.cardsStudent;
         amiteacher = data.amiteacher;
-        if(amiteacher){
-            lists.forEach((list, index) => {
-                generateList(list, index)
-            })
+        if(amiteacher) {
+            generateList(lists[0], 0)
+            generateList(lists[1], 1)
+            generateList(lists[2], 2)
             formEditCard.querySelector("#card-add-question").className = "card-add-button"
             cards.forEach(card => {
                 let _div = generateCard(card)
@@ -52,8 +52,22 @@ document.addEventListener("DOMContentLoaded", e => {
                 card.div = _div;
                 card.isCreate = false;
             })
+            course.students.forEach(st => {
+                let _div = generateCardStudentTeacher(st.username)
+                let _lowercaseflatter = st.username.toLowerCase().charCodeAt(0)
+                if(_lowercaseflatter < 105) {
+                    lists[3].append(_div)
+                }
+                else if(_lowercaseflatter < 114) {
+                    lists[4].append(_div)
+                }
+                else {
+                    lists[5].append(_div)
+                }
+            })
         }
         else {
+            document.querySelector("#student-teacher-cards").className = "none"
             formEditCard.querySelector("#card-add-question").className = "none"
             lists[0].className = "none"
             cards.forEach(card => {
@@ -154,6 +168,14 @@ function cardDragDrop() {
                 courseTitle: courseTitle,
             })
         })
+        .then(resp => {
+            fetch("/api/updatecourseprogress", {
+                method: "POST",
+                body: JSON.stringify({
+                    courseTitle: courseTitle
+                })
+            })
+        })
     }
 
     curCardDragging.querySelector(".card-shadow").className = "none"
@@ -188,21 +210,27 @@ function cardAdd(index) {
 }
 
 function cardEdit(data) {
-    if(amiteacher) {
+    formEditCard.querySelector("input[type='submit']").className = ""
+    formEditCard.querySelector("#form-cancel").innerHTML = "Cancel"
+    if(amiteacher && data.status == "backlog") {
+        formEditCard.querySelector("#card-add-question").className = "card-add-button"
         openModalTeacher(data);
     }
     else {
+        formEditCard.querySelector("#card-add-question").className = "none"
         openModalStudent(data);
     }
     modal.className = "modal";
 }
 
 function cardAddCancel(e) {
-    if(currentCard.isCreate) {
-        currentCard.div.remove();
+    if(currentCard) {
+        if(currentCard.isCreate) {
+            currentCard.div.remove();
+        }
+        currentCard = null
+        changeCards = []
     }
-    currentCard = null
-    changeCards = []
     modal.className = "none"
 }
 
@@ -327,9 +355,10 @@ const openModalStudent = (data) => {
     currentCard.questions.forEach(crd => changeCards.push({... crd}))
 
     divStudentModal.querySelector('h1').innerHTML = currentCard.title
+    divStudentModal.querySelector('span').className = ""
     divStudentModal.querySelector('span').innerHTML = "<strong>Score: </strong>" + data.questions.filter(sc => sc.correct == sc.correctTeacher).length + "/" + data.questions.length
 
-    if(data.done) {
+    if(data.done || (amiteacher && data.status !== "backlog")) {
         formEditCard.querySelector("input[type='submit']").className = "none"
         formEditCard.querySelector("#form-cancel").innerHTML = "Ok"
     }
@@ -342,7 +371,11 @@ const openModalStudent = (data) => {
     let _ol = formEditCard.querySelector("ol");
     _ol.innerHTML = "";
     changeCards.forEach((q, index) => {
-        _ol.append(amiteacher ? generateQuestionEdit(q, index + 1) : generateQuestion(q, index + 1, data.done))
+        let __notonbacklogteacher = amiteacher && data.status != "backlog";
+        if(__notonbacklogteacher) {
+            q.correctTeacher = q.correct;
+        }
+        _ol.append((amiteacher && data.status == "backlog") ? generateQuestionEdit(q, index + 1) : generateQuestion(q, index + 1, (data.done || __notonbacklogteacher)))
     })
 
     formEditCard.querySelector("#card-add-question").onclick = () => {
@@ -361,6 +394,53 @@ const openModalStudent = (data) => {
     }
 }
 
+const openModalStudentTeacher = (username) => {
+    formEditCard.querySelector("#card-add-question").className = "none"
+    divTeacherModal.className = "none";
+    divStudentModal.className = "";
+
+    divStudentModal.querySelector('h1').innerHTML = username
+    divStudentModal.querySelector('span').className = "none";
+
+    formEditCard.querySelector("input[type='submit']").className = "none"
+    formEditCard.querySelector("#form-cancel").innerHTML = "Ok"
+
+    fetch(`/api/getstudentcards?username=${username}&courseTitle=${courseTitle}`, {
+        method: "GET"
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        if(!data.error) {
+            let _ol = formEditCard.querySelector("ol");
+            _ol.innerHTML = "";
+            data.cards.forEach(card => {
+                let filterCard = cards.filter(c => c.title == card.title)[0]
+                if(filterCard) {
+                    let _h2 = document.createElement("h2");
+                    _ol.append(_h2);
+                    
+                    let _div = document.createElement("ol")
+                    _div.style = "margin-bottom: 20px"
+                    card.questions.forEach((q, index) => {
+                        q.correctTeacher = filterCard.questions[index].correct
+                        _div.append(generateQuestion(q, index + 1, true))
+                    })
+                    let _hr = document.createElement("div");
+                    _hr.className = "hr"
+                    _div.append(_hr)
+                    _ol.append(_div)
+                    
+                    let _totalRights = _div.querySelectorAll(".radio-disabled-true").length;
+                    _h2.innerHTML = `${card.title} (${_totalRights}/${card.questions.length})`;
+                }
+            })
+            modal.className = "modal";
+        }
+    })
+
+
+}
+
 const generateList = (_divParent, index) => {
     let _divAddCard = document.createElement("div")
     _divAddCard.className = "card-add"
@@ -375,6 +455,30 @@ const generateList = (_divParent, index) => {
     _divParent.addEventListener('dragenter', cardDragEnter)
     _divParent.addEventListener('dragleave', cardDragLeave)
     _divParent.addEventListener('drop', cardDragDrop)
+}
+
+const generateCardStudentTeacher = (data) => {
+    let _divParent = document.createElement("div")
+    _divParent.className = "card"
+    
+    let _div1 = document.createElement("div")
+    _div1.className = "card-title"
+    let _ptitle = document.createElement("p")
+    _ptitle.innerText = data
+    _div1.append(_ptitle)
+    
+    let _div2 = document.createElement("div")
+    _div2.className = "card-content"
+    
+    let _pscore = document.createElement("p")
+    _pscore.innerText = "-"
+    _div2.append(_pscore)
+    
+    _divParent.append(_div1);
+    _divParent.append(_div2);
+    _divParent.addEventListener('click', () => openModalStudentTeacher(data));
+
+    return _divParent
 }
 
 const generateCard = (data) => {

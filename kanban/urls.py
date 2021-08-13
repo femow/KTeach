@@ -17,5 +17,7 @@ urlpatterns = [
     path("api/joincourse", views.join_course, name="joincourse"),
     path("api/updatecard", views.update_card, name="updatecard"),
     path("api/createcard", views.create_card, name="createcard"),
-    path("api/deletecard", views.delete_card, name="deletecard")
+    path("api/deletecard", views.delete_card, name="deletecard"),
+    path("api/updatecourseprogress", views.update_course_progress, name="updatecourseprogress"),
+    path("api/getstudentcards", views.get_student_cards, name="getstudentcards")
 ]

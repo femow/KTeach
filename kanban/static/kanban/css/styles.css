@@ -4,16 +4,7 @@
     font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
 }
 
-html {
-    background: #ddd;
-    background-image: linear-gradient(45deg, 
-        #fdf1f1,
-        #f3d7d7,
-        #f5cece,
-        #f3d7d7,
-        #f8dede
-    );
-}
+
 
 body {
     display: flex;
@@ -70,7 +61,16 @@ li {
 
 .content {
     width: 100%;
+    background: #ddd;
+    background-image: linear-gradient(45deg, 
+        #fdf1f1,
+        #f3d7d7,
+        #f5cece,
+        #f3d7d7,
+        #f8dede
+    );
 }
+
 
 
 .proj-title, .sidebar-logo {
@@ -211,6 +211,7 @@ li {
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.2);
+    z-index: 10;
     display: flex;
     justify-content: center;
     align-items: center;

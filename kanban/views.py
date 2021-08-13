@@ -128,6 +128,18 @@ def get_courses(request):
     
     return JsonResponse({"error": "Something went wrong."}, status = 500)
 
+def get_student_cards(request):
+    if request.method == "GET":
+        course = Course.objects.get(title = request.GET["courseTitle"])
+        if course.teacher == request.user:
+            # get all cards
+            # each card get all related questions
+            _cards = [cd.serialize() for cd in course.cards.filter(studenttask__username = request.GET["username"])]
+            return JsonResponse({ "cards": _cards }, safe=False, status = 200)
+                
+    return JsonResponse({"error": "Something went wrong."}, status = 500)
+
+
 def get_all_courses(request):
     if request.method == "GET":
         _courses = [cur.serialize() for cur in Course.objects.all().order_by('title')]
@@ -177,6 +189,27 @@ def delete_card(request):
         except:
             return JsonResponse({"error": "Something went wrong."}, status = 500)
     return JsonResponse({"error": "Something went wrong."}, status = 500)
+
+@csrf_exempt
+def update_course_progress(request):
+    if request.method == "POST":
+        data = request.body
+        data = json.loads(data)
+        course = Course.objects.get(title = data['courseTitle'])
+        counterTotal = 0
+        counterDone = 0
+        for c in course.cards.filter(studenttask = course.teacher):
+            if c.status == "todo":
+                counterTotal = counterTotal + 1
+            elif c.status == "done":
+                counterDone = counterDone + 1
+                counterTotal = counterTotal + 1
+
+        course.progress = int((counterDone / counterTotal) * 100)
+        course.save()
+        return JsonResponse({"Status": "Ok"}, status = 200)
+    return JsonResponse({"error": "Something went wrong."}, status = 500)
+
 
 @csrf_exempt
 def update_card(request):
