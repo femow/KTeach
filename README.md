@@ -84,6 +84,24 @@ Contains the connection to the backend using fetch async method to get all the c
 
 Contains the logic to change the edit button.
 
+# How to run your application
+
+Migrate all models
+```
+python manage.py makemigrations
+python manage.py migrate kanban
+python manage.py migrate
+```
+Turn on
+```
+python manage.py runserver
+```
+Acess http://localhost:8000/ url on browser
+
+# Any other additional information the staff should know about your project
+
+The login image and registration image were taken from https://www.freepik.com
+
 # Stacks
 
 ## Front end
