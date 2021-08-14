@@ -10,7 +10,9 @@ urlpatterns = [
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
+    path("myperfil", views.myperfil, name="myperfil"),
 
+    path("api/updateuser", views.update_user, name="updateuser"),
     path("api/getcourse/<str:course>", views.get_course_content, name="getcourse"),
     path("api/courses", views.get_courses, name="getcourses"),
     path("api/allcourses", views.get_all_courses, name="allcourses"),

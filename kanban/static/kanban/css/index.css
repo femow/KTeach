@@ -141,29 +141,6 @@
 }
 
 
-.button-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 4px;
-    background: white;
-    font-size: 1rem;
-    color: #FFA0A0;
-    border: 2px solid #FFA0A0;
-    margin: 4px 0 0 4px;
-    transition: 0.125s;
-    cursor: pointer;
-}
-
-.button-icon-alt {
-    background: #FFA0A0;
-    color: white;
-}
-
-.button-icon:hover {
-    background: #FFA0A0;
-    color: white;
-}
-
 #card-description, #card-title {
     width: 330px;
 }
@@ -192,4 +169,12 @@
 
 .radio-disabled-false[disabled]:after {
     background-color: rgb(240, 63, 10);
+}
+
+
+@media (max-width: 1110px) {
+    .tab-div {
+        align-items: center;
+        flex-direction: column;
+    }
 }

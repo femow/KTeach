@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", e => {
                 card.isCreate = false;
             })
             course.students.forEach(st => {
-                let _div = generateCardStudentTeacher(st.username)
+                let _div = generateCardStudentTeacher(st)
                 let _lowercaseflatter = st.username.toLowerCase().charCodeAt(0)
                 if(_lowercaseflatter < 105) {
                     lists[3].append(_div)
@@ -464,19 +464,19 @@ const generateCardStudentTeacher = (data) => {
     let _div1 = document.createElement("div")
     _div1.className = "card-title"
     let _ptitle = document.createElement("p")
-    _ptitle.innerText = data
+    _ptitle.innerText = data.username
     _div1.append(_ptitle)
     
     let _div2 = document.createElement("div")
     _div2.className = "card-content"
     
     let _pscore = document.createElement("p")
-    _pscore.innerText = "-"
+    _pscore.innerText = `${data.firstname} ${data.lastname}`
     _div2.append(_pscore)
     
     _divParent.append(_div1);
     _divParent.append(_div2);
-    _divParent.addEventListener('click', () => openModalStudentTeacher(data));
+    _divParent.addEventListener('click', () => openModalStudentTeacher(data.username));
 
     return _divParent
 }

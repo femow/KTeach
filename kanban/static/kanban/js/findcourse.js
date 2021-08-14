@@ -1,6 +1,10 @@
 var allcourses = []
 const user_id = JSON.parse(document.getElementById('user').textContent);
 const modal = document.querySelector("#modal")
+const divFilter = document.querySelector(".findcourse-div")
+divFilter.addEventListener('submit', e => applyFilter(e))
+const inputFilter = divFilter.querySelector("input[type='text']")
+
 document.addEventListener("DOMContentLoaded", e => {
     let findcourses = document.querySelector("#findcourse-courses")
 
@@ -15,12 +19,21 @@ document.addEventListener("DOMContentLoaded", e => {
         })
     })
 
-
     modal.querySelector("button").addEventListener("click", (e) => {
         modal.className = "none"
         e.preventDefault()
     })
 })
+
+function applyFilter(e) {
+    e.preventDefault();
+    let findcourses = document.querySelector("#findcourse-courses")
+    findcourses.innerHTML = "";
+    let inputValue = inputFilter.value;
+    allcourses.filter(cr => cr.title.includes(inputValue)).forEach(cr => {
+        findcourses.append(generateCourseCard(cr))
+    })
+}
 
 function clickCard(e, course) {
     if(course.students.filter(c => c.username == user_id).length > 0 || course.teacher.username == user_id) {

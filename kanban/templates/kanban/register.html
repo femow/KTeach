@@ -12,6 +12,8 @@
             {% csrf_token %}
             <h2>Register</h2>
             <input type="text" name="username" placeholder="Enter your username" autofocus>
+            <input type="text" name="fname" placeholder="Enter your first name">
+            <input type="text" name="lname" placeholder="Enter your last name">
             <input type="text" name="email" placeholder="Enter you email">
             <input type="password" name="password" placeholder="Enter you password">
             <input type="password" name="confirmation" placeholder="Cofnrim your password">
@@ -23,7 +25,7 @@
 
             <p>Already have an account? <a href="{% url 'login' %}">Click here.</a></p>
         </form>
-        <div id="login-img">
+        <div id="login-img" style="background-color: #FFA0A0;">
             <img src="../../static/kanban/Creativity-amico.png" alt="" width="400px">
         </div>
     </div>

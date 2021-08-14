@@ -1,0 +1,48 @@
+{% extends "kanban/layout.html" %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'kanban/css/myperfil.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<form class="myperfil-main" action="/api/updateuser" method="POST">
+    <h1>Admin</h1>
+    <p>First name</p>
+    <div class="myperfil-inputs">
+        <input type="text" name="fname" id="" value="{{ user.first_name }}">
+        <button class="button-icon" style="margin: 0 0 0 4px;">
+            <i class='bi bi-check2'></i>
+        </button>
+        <button class="button-icon" style="margin: 0 0 0 4px;" type="button">
+            <i class='bi bi-x'></i>
+        </button>
+    </div>
+    <div class="myperfil-inputs">
+        <h2>{{ user.first_name }}</h2>
+        <button class="button-icon" style="margin: 0 0 0 4px;" type="button">
+            <i class='bi bi-pencil'></i>
+        </button>
+    </div>
+    <p>Last name</p>
+    <div class="myperfil-inputs">
+        <input type="text" name="lname" id="" value="{{ user.last_name }}">
+        <button class="button-icon" style="margin: 0 0 0 4px;">
+            <i class='bi bi-check2'></i>
+        </button>
+        <button class="button-icon" style="margin: 0 0 0 4px;" type="button">
+            <i class='bi bi-x'></i>
+        </button>
+    </div>
+    <div class="myperfil-inputs">
+        <h2>{{ user.last_name }}</h2>
+        <button class="button-icon" style="margin: 0 0 0 4px;" type="button">
+            <i class='bi bi-pencil'></i>
+        </button>
+    </div>
+</form>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'kanban/js/myperfil.js' %}"></script>
+{% endblock %}

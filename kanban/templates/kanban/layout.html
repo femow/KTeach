@@ -21,7 +21,7 @@
                     <a href="{% url 'dashboard' %}">DASHBOARD</a>
                 </button>
                 <button>
-                    <a href="{% url 'dashboard' %}">MY PERFIL</a>
+                    <a href="{% url 'myperfil' %}">MY PERFIL</a>
                 </button>
                 <button>
                     <a href="{% url 'findcourse' %}">FIND COURSE</a>
@@ -37,6 +37,28 @@
         <div class="content">
             {% if user.is_authenticated %}
                 <div class="proj-title"><span class="proj-title-s1">K</span><span class="proj-title-s2">TEACH</span></div>
+                <div class="sidebarhamburger">
+                    <div class="sidebar-logo">
+                        <span class="proj-title-s1">K</span><span class="proj-title-s2">TEACH</span>
+                    </div>
+                    <span>Logged as {{ user.username }}</span>
+                    <div class="hr"></div>
+                    <button>
+                        <a href="{% url 'dashboard' %}">DASHBOARD</a>
+                    </button>
+                    <button>
+                        <a href="{% url 'myperfil' %}">MY PERFIL</a>
+                    </button>
+                    <button>
+                        <a href="{% url 'findcourse' %}">FIND COURSE</a>
+                    </button>
+                    <button>
+                        <a href="{% url 'createcourse' %}">CREATE COURSE</a>
+                    </button>
+                    <button>
+                        <a href="{% url 'logout' %}">LOGOUT</a>
+                    </button>
+                </div>
             {% endif %}
             {% block body %}
             {% endblock %}

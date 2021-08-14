@@ -14,6 +14,13 @@ def index(request):
         })
     return HttpResponseRedirect(reverse("login"))
 
+def myperfil(request):
+    if request.user.is_authenticated:
+        return render(request, "kanban/myperfil.html")
+    return HttpResponseRedirect(reverse("login"), {
+        "user": request.user.serialize()
+    })
+
 def dashboard(request):
     return render(request, "kanban/dashboard.html", {
     })
@@ -56,6 +63,15 @@ def courses(request, course):
         "course": course,
     })
 
+def update_user(request):
+    if request.method == "POST" and request.user.is_authenticated:
+        if request.POST["fname"] != "" and request.POST["lname"] != "":
+            _user = request.user
+            _user.first_name = request.POST["fname"]
+            _user.last_name = request.POST["lname"]
+            _user.save()
+    return render(request, "kanban/myperfil.html")
+
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("login"))
@@ -87,6 +103,8 @@ def register(request):
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
+        fname = request.POST["fname"]
+        lname = request.POST["lname"]
         # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
@@ -106,9 +124,19 @@ def register(request):
             return render(request, "kanban/register.html", {
                 "message": "*Invalid Email."
             })
+        elif fname == "":
+            return render(request, "kanban/register.html", {
+                "message": "*Invalid First name."
+            })
+        elif lname == "":
+            return render(request, "kanban/register.html", {
+                "message": "*Invalid Last name."
+            })
         # Attempt to create new user
         try:
             _user = User.objects.create_user(username, email, password)
+            _user.first_name = fname
+            _user.last_name = lname
             _user.save()
         except IntegrityError:
             return render(request, "kanban/register.html", {

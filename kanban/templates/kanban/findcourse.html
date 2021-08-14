@@ -7,10 +7,10 @@
 
 {% block body %}
 <div class="findcourse">
-    <form class="findcourse-div">
+    <form class="findcourse-div" action="">
         {% csrf_token %}
         <h1>Searching for a course?</h1>
-        <input type="text" name="" id="" placeholder="Find course" autofocus>
+        <input type="text" name="course" placeholder="Find course" autofocus>
         <input type="submit" value="Search">
     </form>
     <hr>
