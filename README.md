@@ -4,23 +4,27 @@
 
 # KTeach
 
-Este projeto foi feito com intuito de facilitar os professores com relação às atividades no estilo questionário com a ajudo do modelo kanban. 
+This project was made with the objective of facilitating teachers in relation to questionnaire-type activities with the help of the Kanban model.
 
 # Distinctiveness and Complexity
 
-O projeto buscou colocar tudo que foi ensinado no curso e feito tudo de forma natural, sem o auxilio de nenhuma ferramenta externa. O projeto tomou proporções tão grande que tive que separar alguns arquivos de js e css separados para poder organizar o projeto. A maior complexidade ficou na parte dos cards, tanto na criação como na manipulação deles, exigindo um trabalho complexo tanto na parte de lógica(código) quanto na parte visual(HTML, CSS). O backend trabalhou bastante a parte de tratar as consultas de forma a aceitar apenas campos válidos e no geral acredito que o projeto seja ma
+The project sought to include everything that was taught in the course and done naturally, without the aid of any external tools. The project took on such large proportions that I had to separate the js and css files to organize it. The greatest complexity was in the part of the cards, both in the creation and in the manipulation of them, demanding a complex work both in the logical part (JavaScript) and in the visual part (HTML, CSS). The backend worked a lot in handling the applied fields and filters.
 
 ## Back end
 
-- Este projeto aplicou todas as lições ensinadas neste curso e acredito que foi um pouco além pois algumas algumas requisições utilizaram uma grau maior de complixidade em relação aos filtros no banco de dados da aplicação e também pela quantidade grande de diferentes requisições.
+This project applied all the lessons taught in this course and I believe it went a little further because some requests used a greater degree of complexity in relation to the application's database filters and also because of the large number of different requests.
 
 ## Front end
 
-- O projeto atendeu ao requisito de ser responsivo.
-- Animações nos botões e nos cartões feitas de forma manual sem auxilio de um framework.
-- Tratamento de mudança de interface via código implmenetado pelo JavaScript e mudança nas funçoes das tags HTML.
-- Utilização de formulário para requests no backend
-- Utilização do "fetch" para consultas na API
+The project met the requirement to be a responsive web site.
+
+Animations on buttons and cards made manually without the help of a framework.
+
+Handling of interface changes via code implemented by JavaScript and changing the functions of HTML tags.
+
+Use of form for backend requests
+
+Using "fetch" for API queries
 
 # What’s contained in each file you created
 
