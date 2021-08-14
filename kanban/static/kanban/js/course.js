@@ -356,7 +356,7 @@ const openModalStudent = (data) => {
 
     divStudentModal.querySelector('h1').innerHTML = currentCard.title
     divStudentModal.querySelector('span').className = ""
-    divStudentModal.querySelector('span').innerHTML = "<strong>Score: </strong>" + data.questions.filter(sc => sc.correct == sc.correctTeacher).length + "/" + data.questions.length
+    divStudentModal.querySelector('span').innerHTML = "<strong>Grade: </strong>" + data.questions.filter(sc => sc.correct == sc.correctTeacher).length + "/" + data.questions.length
 
     if(data.done || (amiteacher && data.status !== "backlog")) {
         formEditCard.querySelector("input[type='submit']").className = "none"
@@ -446,8 +446,13 @@ const generateList = (_divParent, index) => {
     _divAddCard.className = "card-add"
     let _btnAddCard = document.createElement("button")
     _btnAddCard.className = "card-add-button"
-    _btnAddCard.innerText = "+ Add a card"
-    _btnAddCard.onclick = () => cardAdd(index)
+    if(index == 0) {
+        _btnAddCard.innerText = "+ Add a card"
+        _btnAddCard.onclick = () => cardAdd(index)
+    }
+    else {
+        _btnAddCard.innerText = "- - - - - "
+    }
     _divAddCard.append(_btnAddCard)
     _divParent.append(_divAddCard)
 

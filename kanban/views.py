@@ -232,8 +232,10 @@ def update_course_progress(request):
             elif c.status == "done":
                 counterDone = counterDone + 1
                 counterTotal = counterTotal + 1
-
-        course.progress = int((counterDone / counterTotal) * 100)
+        if counterTotal > 0:
+            course.progress = int((counterDone / counterTotal) * 100)
+        else:
+            course.progress = 0
         course.save()
         return JsonResponse({"Status": "Ok"}, status = 200)
     return JsonResponse({"error": "Something went wrong."}, status = 500)
