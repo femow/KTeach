@@ -1,8 +1,6 @@
-# CS50 Harvard - Project Final
+# KTeach
 
 <img src="exemple.PNG" alt="Demo">
-
-# KTeach
 
 This project was made with the objective of facilitating teachers in relation to questionnaire-type activities with the help of the Kanban model.
 
